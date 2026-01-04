@@ -2,7 +2,7 @@
 
   <h1>📝 My Tasks</h1>
   <p class="subtitle">This is my first Angular project 🎉</p>
-
+   
   <!-- ADD TASK FORM -->
   <div class="form-card">
     <input
@@ -57,9 +57,8 @@
           </div>
 
           <div class="actions">
-              <!-- <button (click)="toggle(task)">✔</button> -->
-            
-            <button (click)="editTask(task)">✏️</button>
+            <!-- <button (click)="toggle(task)">✔</button> -->
+            <button [routerLink]="['/tasks/edit',task.id]" routerLinkActive="active">✏️</button>
             <button (click)="deleteTask(task.id)">❌</button>
           </div>
 

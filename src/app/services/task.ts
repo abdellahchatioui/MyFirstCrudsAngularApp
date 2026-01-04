@@ -22,6 +22,12 @@ export class TaskService {
     )
   };
 
+   getTaskById(id :string): Observable<Task>{
+    return this.http.get<Task>(
+      `http://localhost:4000/tasks/${id}`
+    )
+  };
+  
   postTask(newTask: Task ): Observable<Task>{
     return this.http.post<Task>(
       'http://localhost:4000/tasks',

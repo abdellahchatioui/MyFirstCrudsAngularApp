@@ -1,0 +1,20 @@
+<div class="form-card">
+    <input type="text" placeholder="Task title" [(ngModel)]="task.title" />
+
+    <select [(ngModel)]="task.level">
+        <option value="">Select level</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+    </select>
+
+    <label class="checkbox">
+        <input type="checkbox" [(ngModel)]="task.completed" />
+        Completed
+    </label>
+
+      <div class="actions">
+    <button (click)="save()">💾 Save</button>
+    <button (click)="cancel()">❌ Cancel</button>
+  </div>
+</div>

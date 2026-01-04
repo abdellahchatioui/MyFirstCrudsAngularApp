@@ -1,11 +1,12 @@
 import { Component, signal, OnInit } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { TaskService,Task } from '../services/task';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
-  imports: [ FormsModule,NgIf],
+  imports: [CommonModule, FormsModule, RouterModule],
   standalone: true,
   templateUrl: './tasks.html',
   styleUrl: './tasks.css',
@@ -27,13 +28,11 @@ export class Tasks implements OnInit {
   
     ngOnInit(){
       this.getTask();
-      // this.tasks = this.taskService.getTask();
     }
 
     getTask(){
       this.taskService.getTasksFromApi()
         .subscribe(data => {
-          // this.tasks = data;
           this.tasks = [...data]; 
           console.log("Data : ",data);
         }
@@ -63,9 +62,7 @@ export class Tasks implements OnInit {
         };
     };
       
-    deleteTask(id: string) {
-      console.log("id : ",id);
-      
+    deleteTask(id: string) {      
       this.taskService.deleteTask(id).subscribe({
         next: () => {
           this.tasks = this.tasks.filter(task => task.id !== id);
@@ -75,16 +72,4 @@ export class Tasks implements OnInit {
         }
       });} 
 
-      editTask(editTask : Task){
-       
-        this.taskService.editTask(this.newTask , editTask.id)
-        .subscribe( {
-            next: (response) => {
-              this.newTask.title = "";
-              this.getTask();
-            },
-            error: (err) => console.log("error in adding" ,err)
-          }
-        );
-    };
 }
