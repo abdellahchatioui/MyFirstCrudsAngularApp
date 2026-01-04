@@ -13,7 +13,7 @@ export interface Task {
   providedIn: 'root',
 })
 export class TaskService {
-  
+  private apiUrl = 'http://localhost:4000/tasks'; 
   private http = inject(HttpClient);
 
   getTasksFromApi(): Observable<Task[]>{
@@ -29,13 +29,15 @@ export class TaskService {
     )
   };
 
-  // In your service file
-private apiUrl = 'http://localhost:4000/tasks'; 
 
 deleteTask(id: string): Observable<Task> {
-  // Ensure task.id is passed correctly (e.g., /tasks/11)
   const url = `${this.apiUrl}/${id}`; 
   return this.http.delete<Task>(url);
+}
+
+editTask(edittask : Task, id : string): Observable<Task> {
+   const url = `${this.apiUrl}/${id}`; 
+   return this.http.put<Task>(url, edittask);
 }
 
 }

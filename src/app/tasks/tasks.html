@@ -1,39 +1,81 @@
+<div class="container">
 
+  <h1>📝 My Tasks</h1>
+  <p class="subtitle">This is my first Angular project 🎉</p>
 
-    <h3>My Tasks</h3>
-    <p>This is my first Angular project 🎉</p>
-    <!-- value="{{newTask()}}" (input)="readTask($event)" -->
-    <input placeholder="Enter Task" [(ngModel)]="newTask.title" type="text">
+  <!-- ADD TASK FORM -->
+  <div class="form-card">
+    <input
+      type="text"
+      placeholder="Task title"
+      [(ngModel)]="newTask.title"
+    />
 
-    <button (click)="addTask()" [disabled]="newTask.title.length == 0">➕</button>
-    <h2>Tasks List:</h2>
-    <ul>
-        @for (task of tasks; track task.id; let i = $index) {
-            <li [style.color]="i % 2 === 0 ? 'green' : 'blue'">
-                {{task.id}}-{{ task.title }}
-                <button (click)="deleteTask(task.id)">❌</button>  
-            </li>
-        }
-        
-        <!-- Alternative Angular syntax
-        <li *ngFor="let task of tasks; let i = index">
+    <select [(ngModel)]="newTask.level">
+      <option value="">Select level</option>
+      <option value="Easy">Easy</option>
+      <option value="Medium">Medium</option>
+      <option value="Hard">Hard</option>
+    </select>
+
+    <label class="checkbox">
+      <input type="checkbox" [(ngModel)]="newTask.completed" />
+      Completed
+    </label>
+
+    <button
+      (click)="addTask()"
+      [disabled]="!newTask.title || !newTask.level"
+    >
+      ➕ Add Task
+    </button>
+  </div>
+
+  <h2>📋 Tasks List</h2>
+
+  @if (tasks.length === 0) {
+    <p class="empty">No tasks available.</p>
+  } @else {
+
+    <ul class="task-list">
+      @for (task of tasks; track task.id; let i = $index) {
+        <li class="task-card" [class.done]="task.completed">
+
+          <div class="task-info">
+            <span class="task-id">#{{ task.id }}</span>
+            <span class="task-title">{{ task.title }}</span>
+          </div>
+
+          <div class="task-meta">
+            <span class="level" [class]="task.level.toLowerCase()">
+              {{ task.level }}
+            </span>
+
+            <span class="status">
+              {{ task.completed ? '✅ Done' : '⏳ Pending' }}
+            </span>
+          </div>
+
+          <div class="actions">
+              <!-- <button (click)="toggle(task)">✔</button> -->
             
-            {{i+1}}-{{task}}
-            <button (click)="deleteTask(i)">❌</button>
-    
+            <button (click)="editTask(task)">✏️</button>
+            <button (click)="deleteTask(task.id)">❌</button>
+          </div>
+
         </li>
-        -->
-            <p *ngIf="tasks.length === 0">
-                No tasks available.
-            </p>
-    
-        
+      }
     </ul>
-    <hr>
-    
-    @switch (taskLevel()) {
-        @case ("Easy") { <h2>Easy tasks</h2> }
-        @case ("Medium") { <h2>Medium tasks</h2> }
-        @case ("Hard") { <h2>Hard tasks</h2> }
-        @default { <h2>Unknown level</h2> }
-    }
+  }
+
+  <!-- LEVEL SUMMARY -->
+  <hr />
+
+  @switch (taskLevel()) {
+    @case ("Easy") { <h3>🟢 Easy tasks</h3> }
+    @case ("Medium") { <h3>🟡 Medium tasks</h3> }
+    @case ("Hard") { <h3>🔴 Hard tasks</h3> }
+    @default { <h3>⚪ No level selected</h3> }
+  }
+
+</div>

@@ -16,9 +16,9 @@ export class Tasks implements OnInit {
     lastId: string = "";
 
     newTask: Task = {
-      id: "0" ,
-      title: "",
-      level: this.taskLevel(),
+      id: '' ,
+      title: '',
+      level: '',
       completed: false ,
     }
 
@@ -45,7 +45,7 @@ export class Tasks implements OnInit {
       this.lastId = this.tasks.at(-1)?.id ?? "0";
       const incrementId: number = Number(this.lastId) + 1; 
       this.newTask.id = ( incrementId.toString() || "0");
-      console.log();
+      this.tasks.push({ ...this.newTask });
       this.taskService.postTask(this.newTask)
         .subscribe( {
             next: (response) => {
@@ -55,7 +55,12 @@ export class Tasks implements OnInit {
             error: (err) => console.log("error in adding" ,err)
           }
         );
-      
+         this.newTask = {
+          id: '',
+          title: '',
+          level: '',
+          completed: false
+        };
     };
       
     deleteTask(id: string) {
@@ -63,11 +68,23 @@ export class Tasks implements OnInit {
       
       this.taskService.deleteTask(id).subscribe({
         next: () => {
-          this.getTask();
+          this.tasks = this.tasks.filter(task => task.id !== id);
         },
         error: (err) => {
           console.error('Delete failed: Check if ID exists on port 4000', err);
         }
       });} 
 
+      editTask(editTask : Task){
+       
+        this.taskService.editTask(this.newTask , editTask.id)
+        .subscribe( {
+            next: (response) => {
+              this.newTask.title = "";
+              this.getTask();
+            },
+            error: (err) => console.log("error in adding" ,err)
+          }
+        );
+    };
 }

@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [RouterModule ],
+  standalone: true,
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
