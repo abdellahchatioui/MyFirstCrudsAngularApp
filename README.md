@@ -35,10 +35,10 @@ Réaliser une application Angular CRUD permettant la gestion des tasks avec un b
 ```bash
 
 
-git clone https://github.com/abdellahchatioui/MyFirstCrudsAndroidApp.git
+git clone https://github.com/abdellahchatioui/MyFirstCrudsAngularApp.git
 
 
-cd MyFirstCrudsAndroidApp
+cd MyFirstCrudsAngularApp
 
 
 ```
